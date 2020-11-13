@@ -26,7 +26,9 @@
         class="hidden-md-and-up"
         ></v-app-bar-nav-icon>
 
-        <v-toolbar-title>Add application</v-toolbar-title>
+        <v-toolbar-title>
+          <router-link to="/" tag="span" class="pointer">Add application</router-link>
+        </v-toolbar-title>
 
         <v-spacer></v-spacer>
 
@@ -71,5 +73,9 @@
 </script>
 
 <style scoped>
+
+  .pointer {
+    cursor: pointer;
+  }
 
 </style>
