@@ -10,18 +10,16 @@
                   :key="order.id"
           >
             <v-list-tile-action>
-              <div class="ml-4">
-                  <v-checkbox
+                  <v-checkbox class="ml-4"
                           color="success"
                           :input-value="order.done"
                           @change="markDone(order)"
                   ></v-checkbox>
-              </div>
             </v-list-tile-action >
             <v-list-tile-content>
 
               <span class="ml-4">
-                 <v-list-tile-title>{{order.name}}</v-list-tile-title>
+                 <v-list-tile-title>{{ order.name}}</v-list-tile-title>
               </span>
               <span class="ml-3">
                  <v-list-tile-sub-title>{{order.phone}}</v-list-tile-sub-title>
@@ -29,13 +27,10 @@
 
             </v-list-tile-content>
             <v-list-tile-action>
-              <span class="ml-8">
                  <v-btn
                          :to="'/ad/' + order.adId"
-                         class="primary"
+                         class="primary ml-8"
                  >Open</v-btn>
-              </span>
-
             </v-list-tile-action>
           </v-list-tile>
         </v-list>
@@ -68,7 +63,6 @@
 </script>
 
 <style scoped>
-
 
 
 </style>
