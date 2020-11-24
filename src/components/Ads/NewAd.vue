@@ -79,10 +79,11 @@
           const ad = {
             title: this.title,
             description: this.description,
-            promo: this.promo
+            promo: this.promo,
+            imageSrc: 'https://miro.medium.com/max/900/1*OrjCKmou1jT4It5so5gvOA.jpeg'
           }
 
-          console.log(ad)
+          this.$store.dispatch('createAd', ad)
         }
       }
     }
