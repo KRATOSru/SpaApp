@@ -9,7 +9,7 @@ import 'firebase/firestore';
 import 'firebase/auth';
 import 'firebase/storage';
 
-Vue.use(Vuetify)
+ Vue.use(Vuetify)
 
 Vue.config.productionTip = false
 
