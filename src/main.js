@@ -8,7 +8,6 @@ import  fb from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 import 'firebase/storage';
- import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(Vuetify)
 
