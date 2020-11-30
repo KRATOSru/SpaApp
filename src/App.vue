@@ -44,11 +44,36 @@
         </v-toolbar-items>
 
       </v-app-bar>
-
       <v-main>
+
         <v-content>
           <router-view></router-view>
         </v-content>
+
+        <template v-if="error">
+        <v-snackbar
+                :timeout="5000"
+                :multi-line="true"
+                color="error"
+                @input="closeError"
+                :value="true"
+
+        >
+          {{error}}
+
+          <template v-slot:action="{ attrs }">
+            <v-btn
+                    color="red"
+                    text
+                    v-bind="attrs"
+                    @click.native="closeError"
+            >
+              Close
+            </v-btn>
+          </template>
+        </v-snackbar>
+        </template>
+
       </v-main>
     </v-app>
   </template>
@@ -68,6 +93,19 @@
           {title: 'My ads', icon: 'mdi-format-list-bulleted', url: '/list'}
         ]
       }
+    },
+
+    computed: {
+      error() {
+        return this.$store.getters.error()
+      }
+    },
+
+    methods: {
+      closeError() {
+        this.$store.dispatch('clearError')
+      }
+
     }
   }
 </script>
