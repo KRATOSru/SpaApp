@@ -14,12 +14,17 @@ import 'firebase/storage';
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
+// new Vue({
+//     el: '#app',
+//     router,
+//     store,
+//     components: { App },
+//     template: '<App/>',
 new Vue({
-    el: '#app',
+    render: h => h(App),
     router,
     store,
     components: { App },
-    template: '<App/>',
      created () {
         fb.initializeApp({
              apiKey: 'AIzaSyCpI9T-2zUlqR49-1Pl3huvCi-JDXtW60Y',
@@ -31,4 +36,9 @@ new Vue({
             appId: '1:1006982826474:web:e672ece7fb8c16ca3f8a93'
          })
      }
-})
+ })
+
+
+
+
+
