@@ -28,7 +28,10 @@
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title v-text="'Logout'"></v-list-item-title>
+              <v-list-item-title
+                      v-if="isUserLoggedIn"
+                      v-text="'Logout'">
+              </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -56,7 +59,9 @@
           </v-btn>
           <v-btn
                   @click="onLogout"
-                  flat>
+                  flat
+                  v-if="isUserLoggedIn"
+          >
             <v-icon left>mdi-exit-to-app</v-icon>
             Logout
           </v-btn>
@@ -133,6 +138,7 @@
       },
       onLogout() {
         this.$store.dispatch('logoutUser')
+        this.$router.push('/')
       }
     }
   }
