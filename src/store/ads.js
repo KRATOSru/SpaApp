@@ -3,6 +3,7 @@ import  fb from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 import 'firebase/storage';
+import {async} from "@firebase/storage/dist/src/implementation/async";
 
 class Ad {
     constructor(title, description, ownerId, imageSrc = '',  promo = false, id = null) {
@@ -16,29 +17,7 @@ class Ad {
 }
 export default  {
     state: {
-        ads: [
-            {
-                title: 'First ad',
-                description: 'Hello i am description',
-                promo: false,
-                imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
-                id: '123'
-            },
-            {
-                title: 'Second ad',
-                description: 'Hello i am description',
-                promo: true,
-                imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
-                id: '1234'
-            },
-            {
-                title: 'Third ad',
-                description: 'Hello i am description',
-                promo: true,
-                imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
-                id: '12345'
-            }
-        ]
+        ads: []
     },
     mutations: {
         createAd(state, payload) {
@@ -48,7 +27,21 @@ export default  {
     actions: {
        async createAd({commit, getters}, payload) {
            commit('clearError')
-           commit('setLoading', true)
+           commit('setLoading', true),
+
+               async fetchAds ({commit}) {
+                   commit('clearError'),
+                   commit('setLoading', true)
+
+               try {
+                   
+               }catch (error) {
+                       commit('setError', error.message)
+                       commit('setLoading', false)
+                       throw error
+                   
+               }
+           }
 
            try {
                const newAd = new Ad(
