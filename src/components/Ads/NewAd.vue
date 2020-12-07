@@ -25,15 +25,20 @@
         </v-form>
         <v-layout row class="mb-3 ml-4">
           <v-flex xs12>
-            <v-btn class="warning">
+            <v-btn class="warning" @click="triggerUpload">
               Upload
               <v-icon right dark>mdi-cloud-upload</v-icon>
             </v-btn>
+            <input ref="fileInput"
+                   type="file"
+                   style="display: none;"
+                   accept="image/*"
+                   @change="onFileChange">
           </v-flex>
         </v-layout>
         <v-layout row class="ml-4">
           <v-flex xs12>
-            <img src="https://cdn.vuetifyjs.com/images/carousel/planet.jpg" height="100">
+            <img :src="imageSrc" height="100" v-if="imageSrc">
           </v-flex>
         </v-layout>
         <v-layout row class="ml-4">
@@ -50,7 +55,7 @@
             <v-spacer></v-spacer>
             <v-btn
                     :loading="loading"
-                    :disabled="!valid || loading"
+                    :disabled="!valid || !image || loading"
                     class="success"
                     @click="createAd"
             >
@@ -70,7 +75,9 @@
         title: '',
         description: '',
         promo: false,
-        valid: false
+        valid: false,
+        image: null,
+        imageSrc: ''
       }
     },
     computed: {
@@ -80,13 +87,13 @@
     },
     methods: {
       createAd () {
-        if (this.$refs.form.validate()) {
+        if (this.$refs.form.validate() && this.image) {
           // logic
           const ad = {
             title: this.title,
             description: this.description,
             promo: this.promo,
-            imageSrc: 'https://miro.medium.com/max/900/1*OrjCKmou1jT4It5so5gvOA.jpeg'
+            image: this.image
           }
 
           this.$store.dispatch('createAd', ad)
@@ -95,6 +102,21 @@
               })
               .catch( () => {})
         }
+      },
+      triggerUpload() {
+        this.$refs.fileInput.click()
+      },
+      onFileChange(event) {
+        const file = event.target.files[0]
+
+        const reader = new FileReader()
+        // eslint-disable-next-line no-unused-vars
+        reader.onload = e => {
+          this.imageSrc = reader.result
+        }
+
+        reader.readAsDataURL(file)
+        this.image = file
       }
     }
   }
