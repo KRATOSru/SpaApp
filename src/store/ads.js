@@ -3,7 +3,7 @@ import  fb from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 import 'firebase/storage';
-import {async} from "@firebase/storage/dist/src/implementation/async";
+// import {async} from "@firebase/storage/dist/src/implementation/async";
 
 class Ad {
     constructor(title, description, ownerId, imageSrc = '',  promo = false, id = null) {
@@ -15,72 +15,84 @@ class Ad {
         this.id = id
     }
 }
-export default  {
+export default {
     state: {
         ads: []
     },
     mutations: {
-        createAd(state, payload) {
+        createAd (state, payload) {
             state.ads.push(payload)
+        },
+        loadAds (state, payload) {
+            state.ads = payload
         }
     },
     actions: {
-       async createAd({commit, getters}, payload) {
-           commit('clearError')
-           commit('setLoading', true),
+        async createAd ({commit, getters}, payload) {
+            commit('clearError')
+            commit('setLoading', true)
 
-               async fetchAds ({commit}) {
-                   commit('clearError'),
-                   commit('setLoading', true)
+            try {
+                const newAd = new Ad(
+                    payload.title,
+                    payload.description,
+                    getters.user.id,
+                    payload.imageSrc,
+                    payload.promo
+                )
 
-               try {
-                   
-               }catch (error) {
-                       commit('setError', error.message)
-                       commit('setLoading', false)
-                       throw error
-                   
-               }
-           }
+                const ad = await fb.database().ref('ads').push(newAd)
 
-           try {
-               const newAd = new Ad(
-                   payload.title,
-                   payload.description,
-                   getters.user.id,
-                   payload.imageSrc,
-                   payload.promo
-               )
+                commit('setLoading', false)
+                commit('createAd', {
+                    ...newAd,
+                    id: ad.key
+                })
+            } catch (error) {
+                commit('setError', error.message)
+                commit('setLoading', false)
+                throw error
+            }
+        },
+        async fetchAds ({commit}) {
+            commit('clearError')
+            commit('setLoading', true)
 
-              const ad = await fb.database().ref('ads').push(newAd)
+            const resultAds = []
 
-               commit('setLoading', false)
-               commit('createAd', {
-                   ...newAd,
-                   id: ad.key
-               })
+            try {
+                const fbVal = await fb.database().ref('ads').once('value')
+                const ads = fbVal.val()
 
-           } catch (error) {
-               commit('setError', error.message)
-               commit('setLoading', false)
-               throw error
-           }
+                Object.keys(ads).forEach(key => {
+                    const ad = ads[key]
+                    resultAds.push(
+                        new Ad(ad.title, ad.description, ad.ownerId, ad.imageSrc, ad.promo, key)
+                    )
+                })
+
+                commit('loadAds', resultAds)
+                commit('setLoading', false)
+            } catch (error) {
+                commit('setError', error.message)
+                commit('setLoading', false)
+                throw error
+            }
         }
     },
     getters: {
-        ads(state) {
+        ads (state) {
             return state.ads
         },
-        promoAds(state) {
+        promoAds (state) {
             return state.ads.filter(ad => {
                 return ad.promo
             })
         },
-        myAds(state) {
+        myAds (state) {
             return state.ads
         },
-
-        adById(state) {
+        adById (state) {
             return adId => {
                 return state.ads.find(ad => ad.id === adId)
             }
