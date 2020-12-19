@@ -8,8 +8,10 @@ import  fb from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 import 'firebase/storage';
+import ByModalComponent from "./components/Shared/ByModal";
 
- Vue.use(Vuetify)
+Vue.use(Vuetify)
+Vue.component('app-by-modal', ByModalComponent)
 
 Vue.config.productionTip = false
 
