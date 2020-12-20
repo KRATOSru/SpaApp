@@ -52,29 +52,27 @@
 
 <script>
   export default {
-    data () {
-      return {
-        orders: [
-          {
-            id: 'fds3',
-            name: 'Vladimir',
-            phone: '8-977-777-77-77',
-            adId: '123',
-            done: false
-          }
-        ]
-      }
-    },
       computed: {
         loading () {
             return this.$store.getters.loading
-        }
+        },
+          orders () {
+            return this.$store.getters.orders
+          }
       },
+
     methods: {
       markDone (order) {
-        order.done = true
+          this.$store.dispatch('markOrderDone', order.id)
+          .then(() => {
+              order.done = true
+          })
+          .catch(() => {})
       }
-    }
+    },
+      created() {
+        this.$store.dispatch('fetchOrders')
+      }
   }
 </script>
 
