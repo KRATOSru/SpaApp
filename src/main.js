@@ -9,8 +9,22 @@ import 'firebase/firestore';
 import 'firebase/auth';
 import 'firebase/storage';
 import ByModalComponent from "./components/Shared/ByModal";
+// eslint-disable-next-line no-unused-vars
+import colors from 'vuetify/lib/util/colors'
 
-Vue.use(Vuetify)
+Vue.use(Vuetify), {
+    theme: {
+
+    primary: "#2196f3",
+    secondary: "#9c27b0",
+    accent: "#8bc34a",
+    error: "#f44336",
+    warning: "#e91e63",
+    info: "#607d8b",
+    success: "#4caf50"
+
+    }
+}
 Vue.component('app-by-modal', ByModalComponent)
 
 Vue.config.productionTip = false
