@@ -83,14 +83,16 @@
 
 <style scoped>
 
-  .car-link {
-    position: absolute;
-    bottom: 50px;
-    left: 50%;
-    background: rgba(0, 0, 0, .5);
-    transform: translate(-50%, 0);
-    padding: 5px 15px;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-  }
+.car-link {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  background: rgba(0, 0, 0, .5);
+  transform: translate(-50%, 0);
+  padding: 5px 15px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+
+}
+
 </style>
